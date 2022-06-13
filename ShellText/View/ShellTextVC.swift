@@ -8,9 +8,17 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+protocol RulesForPrinting {
+    func print(_ text: String, color: UIColor, global: Bool);
+    func print(_ text: NSAttributedString, global: Bool);
+    func addLine();
+    func error(_ text: String);
+}
+
+class ShellTextVC: UIViewController, RulesForPrinting {
 
     @IBOutlet weak var textView: UITextView!
+    static var delegate: ShellTextVC?;
     
     var textAppearance: [NSAttributedString.Key: Any] = {
         return [
@@ -21,20 +29,22 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        
-        print("TESTING THE CONSOLE MODE!!!", color: .red, global: true);
+        ShellTextVC.delegate = self;
+        CurrentWeather().downloadWeatherDetails {
+            
+        }
         
         // Do any additional setup after loading the view.
     }
     
-    func print(_ text: String, color: UIColor = UIColor.white, global: Bool = true) {
+    func print(_ text: String, color: UIColor, global: Bool) {
         let formattedText = NSMutableAttributedString(string: text)
         formattedText.addAttributes(textAppearance, range: formattedText.range)
         formattedText.addAttribute(.foregroundColor, value: color, range: formattedText.range)
         print(formattedText, global: global)
     }
 
-    func print(_ text: NSAttributedString, global: Bool = true) {
+    func print(_ text: NSAttributedString, global: Bool) {
         // When we leave this method and global is true, we want to print it to console
         defer {
             if global {
@@ -59,11 +69,11 @@ class ViewController: UIViewController {
     }
 
     func error(_ text: String) {
-        print(text, color: UIColor.red)
+        print(text, color: UIColor.red, global: true);
     }
 
     func addLine() {
-        print("-----------", color: UIColor.red)
+        print("-----------", color: UIColor.red, global: true);
     }
     
     func scrollToBottom() {
