@@ -1,10 +1,7 @@
-//
-//  AppDelegate.swift
-//  ShellText
-//
-//  Created by robot on 3/13/21.
-//  Copyright © 2021 robot. All rights reserved.
-//
+/*
+ * Copyright (C) 2023 Recompile.me.
+ * All rights reserved.
+ */
 
 import UIKit
 import CoreData

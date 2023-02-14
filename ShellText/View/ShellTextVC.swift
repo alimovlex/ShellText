@@ -1,10 +1,7 @@
-//
-//  ViewController.swift
-//  ShellText
-//
-//  Created by robot on 4/22/21.
-//  Copyright © 2021 robot. All rights reserved.
-//
+/*
+ * Copyright (C) 2023 Recompile.me.
+ * All rights reserved.
+ */
 
 import UIKit
 
@@ -19,6 +16,7 @@ class ShellTextVC: UIViewController, RulesForPrinting {
 
     @IBOutlet weak var textView: UITextView!
     static var delegate: ShellTextVC?;
+    var currentWeather: CurrentWeather?;
     
     var textAppearance: [NSAttributedString.Key: Any] = {
         return [
@@ -30,7 +28,8 @@ class ShellTextVC: UIViewController, RulesForPrinting {
     override func viewDidLoad() {
         super.viewDidLoad();
         ShellTextVC.delegate = self;
-        CurrentWeather().downloadWeatherDetails {
+        currentWeather = CurrentWeather();
+        currentWeather?.downloadWeatherDetails {
             
         }
         
